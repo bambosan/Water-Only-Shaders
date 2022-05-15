@@ -20,7 +20,7 @@
 			header{
 				padding: 46vh 15% 0 15%;
 				text-align: left;
-				font-size: 4em;
+				font-size: 5em;
 				text-shadow: 0 0 10px black
 			}
 			footer{
@@ -29,13 +29,13 @@
 				font-size: 0.9em
 			}
 			p{
-				font-size: 1.1em;
+				font-size: 1.3em;
 				text-align: justify;
 				line-height: 30px;
 				padding: 2px
 			}
 			ul{padding: 15px}
-			ul li{font-size: 1.1em; line-height: 28px; text-align: justify}
+			ul li{font-size: 1.3em; line-height: 28px; text-align: justify}
 			.name{
 				padding: 10px 15% 0 15%;
 				text-align: left;
@@ -85,19 +85,19 @@
 					}
 				}
 			}
-			const mirai = 'https://api.github.com/repos/bambosan/Nori-Shaders-BE/releases';
-			load(mirai,1).then(val => { wos_lu.innerHTML = val});
-			load(mirai,2).then(val => { wos_sf.innerHTML = val});
-			load(mirai,3).then(val => { wos_td.innerHTML = val});
+			const wos = 'https://api.github.com/repos/bambosan/WaterOnlyShader/releases';
+			load(wos,1).then(val => { wos_lu.innerHTML = val});
+			load(wos,2).then(val => { wos_sf.innerHTML = val});
+			load(wos,3).then(val => { wos_td.innerHTML = val});
 		</script>
 	</head>
 	<body>
 		<div class="colbg">
-			<p class="name"><a href="https://github.com/bambosan/Nori-Shaders-BE"><i class="fab fa-github"></i> bambosan repositories</a></p>
+			<p class="name"><a href="https://github.com/bambosan/WaterOnlyShader"><i class="fab fa-github"></i> bambosan repositories</a></p>
 			<header><strong>Water Only Shader</strong></header>
 		</div>
 		<div class="col"><br>
-			<p>A really simple Minecraft: Java edition shader<p><br>
+			<p>A really simple Optifine shaders Minecraft: Java edition<p><br>
 			<div class="imgss">
 				<img src="./pic/ss1.jpg" alt="WaterOnlyShader"><br>
 				<img src="./pic/ss2.jpg" alt="WaterOnlyShader"><br>
@@ -106,26 +106,17 @@
 			</div><br><br>
 			<h2>Features</h2>
 			<ul>
-				<li>Screen Space Reflection</li>
-				<li>Screen Space Refraction</li>
-				<li>Water Absorption</li>
-				<li>Water Waving (simple waving in vertex and trochoidal waving in fragment)</li>
+				<li>Screen space Reflection & Refraction</li>
+				<li>Water absorption with vanilla Minecraft biome colors</li>
+				<li>Water waving (simple waving in vertex and trochoidal waving in fragment)</li>
 			</ul>
 			<br>
 			<h2>Note !</h2>
-			<p>This shader is only for Minecraft with Optifine mod, Iris mod support is planned for the next update</p><br><br>
-			<h2>Download</h2>
-			<p class="infpack">
-				<i class="far fa-calendar-check"></i>&nbsp;<span id="wos_lu"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-file"></i>&nbsp;<span id="wos_sf"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-download"></i>&nbsp;<span id="wos_td"></span>&nbsp;&nbsp;&nbsp;<strong>download count is shaders only and currently version 1.1.0 (latest)</strong>
-			</p><br>
-			<a href="https://github.com/bambosan/Nori-Shaders-BE/releases/download/1.1.0/Nori-Shaders-BE.mcpack" style="padding: 8px; border: 1px solid #888">Nori Shaders BE</a>
-			<br><br>
-			<a href="https://github.com/bambosan/Nori-PBR-Base/releases/download/0.0.1/Nori-PBR-Base.mcpack" style="padding: 8px; border: 1px solid #888">Nori PBR Base</a>
-			<br><br>
-			<a href="https://github.com/bambosan/example-nori-pbr-VNR-edit/releases/download/1.0.4/example-nori-pbr-VNR-edit.mcpack" style="padding: 8px; border: 1px solid #888">Example Nori PBR (VNR edit)</a>
-			<br><br><br><a href="https://github.com/bambosan/Nori-Shaders-BE/releases" style="padding: 8px; border: 1px solid #888">another version of shader is here</a><br><br><br>
-			<h2>Support Me</h2><br>
-			<a href="https://www.patreon.com/posts/nori-shaders-be-63488469?utm_medium=clipboard_copy&utm_source=copy_to_clipboard&utm_campaign=postshare" style="padding: 8px; border: 1px solid #888">patreon</a>&nbsp;&nbsp;<a href="https://saweria.co/bambosan" style="padding: 8px; border: 1px solid #888">saweria</a>
+			<p>This shader is only for Minecraft with Optifine mod, Iris mod support is planned for the next update</p><br><br><br>
+			<a href="https://github.com/bambosan/WaterOnlyShader/releases/download/v1.0/Water-Only-Shaders-1.0.zip" style="font-size: 1.4em; padding: 8px; border: 1px solid #888">Download Shaders</a><br><br>
+			<div class="infpack">
+				<i class="far fa-calendar-check"></i>&nbsp;<span id="wos_lu"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-file"></i>&nbsp;<span id="wos_sf"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-download"></i>&nbsp;<span id="wos_td"></span>
+			</div><br>
 			<br><br>
 			<footer>&copy; 2022 <a href="https://github.com/bambosan">bambosan</a></footer>
 		</div>
