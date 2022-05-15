@@ -69,7 +69,7 @@ float calctrocoidalwave(vec2 coord){
 	return -waves;
 }
 
-vec3 getwaternormal(vec3 position, vec3 worldpos){
+vec3 calcwaternormal(vec3 position, vec3 worldpos){
 	vec2 posxz = position.xz * wwscale;
 	float h0 = calctrocoidalwave(posxz);
 	float h1 = calctrocoidalwave(posxz + vec2(wnormaloffset, 0.0));
@@ -138,7 +138,7 @@ void main(){
 	if(normal.a > 0.0 && normal.a < 0.2){
 		vec3 position = worldpos + cameraPosition;
 
-		vec3 normalmap = getwaternormal(position, worldpos);
+		vec3 normalmap = calcwaternormal(position, worldpos);
 		normalmap = normalmap * 2.0 - 1.0;
 		normalmap = normalize(normalmap * tbn);
 		vec3 wnormalmap = mat3(gbufferModelViewInverse) * normalmap;

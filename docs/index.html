@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Water Only Shader</title>
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+		<script src="https://kit.fontawesome.com/1bdb927010.js"></script>
+		<style media="screen">
+			*{margin: 0; padding: 0}
+			a{color: #bbb; text-decoration: none}
+			a:hover{color: #C70500}
+			body{
+				font-family:Open Sans;
+				color: #bbb;
+				background: black;
+				-webkit-tap-highlight-color: transparent;
+				margin: auto;
+			}
+			header{
+				padding: 46vh 15% 0 15%;
+				text-align: left;
+				font-size: 4em;
+				text-shadow: 0 0 10px black
+			}
+			footer{
+				padding: 60px;
+				text-align: center;
+				font-size: 0.9em
+			}
+			p{
+				font-size: 1.1em;
+				text-align: justify;
+				line-height: 30px;
+				padding: 2px
+			}
+			ul{padding: 15px}
+			ul li{font-size: 1.1em; line-height: 28px; text-align: justify}
+			.name{
+				padding: 10px 15% 0 15%;
+				text-align: left;
+				font-size: 1.5em
+			}
+			.col{
+				padding: 0 15% 0 15%;
+			}
+			.colbg{
+				background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./pic/ss4.jpg');
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.infpack{font-size: 0.8em}
+			@media (max-width: 1000px){header{font-size: 3.5em}}
+			@media (max-width: 900px){header{padding: 35vh 15% 0 15%}}
+			@media (max-width: 720px){
+				header{font-size: 3em; padding: 30vh 5% 0 5%}
+				p{font-size: 1.1em}
+				.name{font-size: 1.3em; padding: 10px 5% 0 5%}
+				.col{padding: 0 5% 0 5%}
+			}
+			@media (max-width: 512px){
+				header{font-size: 2.3em; padding: 20vh 2% 0 2%}
+				p{font-size: 1em}
+				ul li{font-size: 1em}
+				.name{font-size: 1.3em; padding: 10px 2% 0 2%}
+				.col{padding: 0 2% 0 2%}
+			}
+			.imgss img{
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover
+			}
+		</style>
+		<script>
+			async function load(url, sel){
+				const obj = await (await fetch(url)).json();
+				if(obj == 0){ return "not released"; } else {
+					switch(sel){
+						case 1: let uval = obj[0].assets[0].updated_at;
+							return uval.slice(0,10); break;
+						case 2: let fsval = obj[0].assets[0].size;
+							return (Math.round((fsval/1e6)*1000)/1000)+" MB"; break;
+						case 3: return obj[0].assets[0].download_count; break;
+					}
+				}
+			}
+			const mirai = 'https://api.github.com/repos/bambosan/Nori-Shaders-BE/releases';
+			load(mirai,1).then(val => { wos_lu.innerHTML = val});
+			load(mirai,2).then(val => { wos_sf.innerHTML = val});
+			load(mirai,3).then(val => { wos_td.innerHTML = val});
+		</script>
+	</head>
+	<body>
+		<div class="colbg">
+			<p class="name"><a href="https://github.com/bambosan/Nori-Shaders-BE"><i class="fab fa-github"></i> bambosan repositories</a></p>
+			<header><strong>Water Only Shader</strong></header>
+		</div>
+		<div class="col"><br>
+			<p>A really simple Minecraft: Java edition shader<p><br>
+			<div class="imgss">
+				<img src="./pic/ss1.jpg" alt="WaterOnlyShader"><br>
+				<img src="./pic/ss2.jpg" alt="WaterOnlyShader"><br>
+				<img src="./pic/ss3.jpg" alt="WaterOnlyShader"><br>
+				<img src="./pic/ss5.jpg" alt="WaterOnlyShader">
+			</div><br><br>
+			<h2>Features</h2>
+			<ul>
+				<li>Screen Space Reflection</li>
+				<li>Screen Space Refraction</li>
+				<li>Water Absorption</li>
+				<li>Water Waving (simple waving in vertex and trochoidal waving in fragment)</li>
+			</ul>
+			<br>
+			<h2>Note !</h2>
+			<p>This shader is only for Minecraft with Optifine mod, Iris mod support is planned for the next update</p><br><br>
+			<h2>Download</h2>
+			<p class="infpack">
+				<i class="far fa-calendar-check"></i>&nbsp;<span id="wos_lu"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-file"></i>&nbsp;<span id="wos_sf"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-download"></i>&nbsp;<span id="wos_td"></span>&nbsp;&nbsp;&nbsp;<strong>download count is shaders only and currently version 1.1.0 (latest)</strong>
+			</p><br>
+			<a href="https://github.com/bambosan/Nori-Shaders-BE/releases/download/1.1.0/Nori-Shaders-BE.mcpack" style="padding: 8px; border: 1px solid #888">Nori Shaders BE</a>
+			<br><br>
+			<a href="https://github.com/bambosan/Nori-PBR-Base/releases/download/0.0.1/Nori-PBR-Base.mcpack" style="padding: 8px; border: 1px solid #888">Nori PBR Base</a>
+			<br><br>
+			<a href="https://github.com/bambosan/example-nori-pbr-VNR-edit/releases/download/1.0.4/example-nori-pbr-VNR-edit.mcpack" style="padding: 8px; border: 1px solid #888">Example Nori PBR (VNR edit)</a>
+			<br><br><br><a href="https://github.com/bambosan/Nori-Shaders-BE/releases" style="padding: 8px; border: 1px solid #888">another version of shader is here</a><br><br><br>
+			<h2>Support Me</h2><br>
+			<a href="https://www.patreon.com/posts/nori-shaders-be-63488469?utm_medium=clipboard_copy&utm_source=copy_to_clipboard&utm_campaign=postshare" style="padding: 8px; border: 1px solid #888">patreon</a>&nbsp;&nbsp;<a href="https://saweria.co/bambosan" style="padding: 8px; border: 1px solid #888">saweria</a>
+			<br><br>
+			<footer>&copy; 2022 <a href="https://github.com/bambosan">bambosan</a></footer>
+		</div>
+	</body>
+</html>
