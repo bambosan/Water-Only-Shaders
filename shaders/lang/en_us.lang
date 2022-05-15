@@ -1,0 +1,12 @@
+
+option.wwscale=Water Wave Scale
+option.wwspeed=Water Wave Speed
+option.wnormalstrength=Water Normal Strength
+option.wnormaloffset=Water Normal Offset
+option.watertex=Water Textured
+option.wtransparency=Water Transparency
+option.wbrightness=Water Surface Brightness
+option.raysstep=Raytrace Step Count
+option.refinestep=RT Refine Step Count
+option.waterdensity=Water Density
+option.wreflectance=Water Reflectance
