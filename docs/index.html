@@ -1,124 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Water Only Shader</title>
-		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
-		<script src="https://kit.fontawesome.com/1bdb927010.js"></script>
-		<style media="screen">
-			*{margin: 0; padding: 0}
-			a{color: #bbb; text-decoration: none}
-			a:hover{color: #C70500}
-			body{
-				font-family:Open Sans;
-				color: #bbb;
-				background: black;
-				-webkit-tap-highlight-color: transparent;
-				margin: auto;
-			}
-			header{
-				padding: 46vh 15% 0 15%;
-				text-align: left;
-				font-size: 5em;
-				text-shadow: 0 0 10px black
-			}
-			footer{
-				padding: 60px;
-				text-align: center;
-				font-size: 0.9em
-			}
-			p{
-				font-size: 1.3em;
-				text-align: justify;
-				line-height: 30px;
-				padding: 2px
-			}
-			ul{padding: 15px}
-			ul li{font-size: 1.3em; line-height: 28px; text-align: justify}
-			.name{
-				padding: 10px 15% 0 15%;
-				text-align: left;
-				font-size: 1.5em
-			}
-			.col{
-				padding: 0 15% 0 15%;
-			}
-			.colbg{
-				background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./pic/ss4.jpg');
-				background-repeat: no-repeat;
-				background-size: cover;
-			}
-			.infpack{font-size: 0.8em}
-			@media (max-width: 1000px){header{font-size: 3.5em}}
-			@media (max-width: 900px){header{padding: 35vh 15% 0 15%}}
-			@media (max-width: 720px){
-				header{font-size: 3em; padding: 30vh 5% 0 5%}
-				p{font-size: 1.1em}
-				.name{font-size: 1.3em; padding: 10px 5% 0 5%}
-				.col{padding: 0 5% 0 5%}
-			}
-			@media (max-width: 512px){
-				header{font-size: 2.3em; padding: 20vh 2% 0 2%}
-				p{font-size: 1em}
-				ul li{font-size: 1em}
-				.name{font-size: 1.3em; padding: 10px 2% 0 2%}
-				.col{padding: 0 2% 0 2%}
-			}
-			.imgss img{
-				display: block;
-				width: 100%;
-				height: 100%;
-				object-fit: cover
-			}
-		</style>
-		<script>
-			async function load(url, sel){
-				const obj = await (await fetch(url)).json();
-				if(obj == 0){ return "not released"; } else {
-					switch(sel){
-						case 1: let uval = obj[0].assets[0].updated_at;
-							return uval.slice(0,10); break;
-						case 2: let fsval = obj[0].assets[0].size;
-							return (Math.round((fsval/1e6)*1000)/1000)+" MB"; break;
-						case 3: return obj[0].assets[0].download_count; break;
-					}
-				}
-			}
-			const wos = 'https://api.github.com/repos/bambosan/WaterOnlyShader/releases';
-			load(wos,1).then(val => { wos_lu.innerHTML = val});
-			load(wos,2).then(val => { wos_sf.innerHTML = val});
-			load(wos,3).then(val => { wos_td.innerHTML = val});
-		</script>
-	</head>
-	<body>
-		<div class="colbg">
-			<p class="name"><a href="https://github.com/bambosan/WaterOnlyShader"><i class="fab fa-github"></i> bambosan repositories</a></p>
-			<header><strong>Water Only Shader</strong></header>
-		</div>
-		<div class="col"><br>
-			<p>A really simple Optifine shaders Minecraft: Java edition<p><br>
-			<div class="imgss">
-				<img src="./pic/ss1.jpg" alt="WaterOnlyShader"><br>
-				<img src="./pic/ss2.jpg" alt="WaterOnlyShader"><br>
-				<img src="./pic/ss3.jpg" alt="WaterOnlyShader"><br>
-				<img src="./pic/ss5.jpg" alt="WaterOnlyShader">
-			</div><br><br>
-			<h2>Features</h2>
-			<ul>
-				<li>Screen space Reflection & Refraction</li>
-				<li>Water absorption with vanilla Minecraft biome colors</li>
-				<li>Water waving (simple waving in vertex and trochoidal waving in fragment)</li>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mirai shaders be</title>
+  <script src="https://kit.fontawesome.com/1bdb927010.js"></script>
+  <link rel="stylesheet" href="https://bambosan.github.io/a/style.css">
+  <link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="contain">
+    <nav id="navbar">
+      <a href="#" id="gico"><i class="fab fa-github"></i> Github</a>
+      <button id="navbtn"><i class="fas fa-bars"></i></button>
+      <div id="navcon">
+        <a href="#">Home</a>
+        <a href="#">Tools</a>
+        <a href="#">App</a>
+        <a href="#">Minecraft</a>
+      </div>
+    </nav>
+    <br>
+    <div id="headers">
+      <p id="mainhead">Mirai Shaders BE</p>
+    </div>
+    <div id="box1">
+      <p>A shaders for Minecraft: Bedrock edition with realistic theme and have some features like 3D volumetric and 2D plane clouds, atmospheric scattering, waterbump, underwater caustic etc..</p><br>
+			<div class="swiper-slide"><img src="./pic/ss1.jpg" alt="mirai-shaders-be"></div>
+			<div class="swiper-slide"><img src="./pic/ss2.jpg" alt="mirai-shaders-be"></div>
+			<div class="swiper-slide"><img src="./pic/ss3.jpg" alt="mirai-shaders-be"></div>
+			<div class="swiper-slide"><img src="./pic/ss4.jpg" alt="mirai-shaders-be"></div>
+    </div><br><br>
+    <p id="chead">Shader Settings / Configuration</p>
+    <div id="box1">
+      <p>you can configure the shader in file "common.glsl"<br>which is located in the shaders/glsl folder</p>
+    </div>
+    <br><br>
+    <p id="chead">Note</p>
+    <div id="box1">
+      <ul>
+				<li>This shader is only recommended for high-end devices</li>
+				<li>This shader is not support minecraft bedrock windows 10 32bit (not renderdragon version)</li>
+				<li>This shader is not playable and the time cycle is not matched with minecraft default time, so this shader is not survival friendly.</li>
+				<li>the underwater part of this shader is still not changed</li>
+				<li>Don't reupload the shader file, if you want to share it, just use this github page link</li>
+				<li>Don't make this github page link or download link as a shortlink and activate some payment method on the shortlink</li>
 			</ul>
-			<br>
-			<h2>Note !</h2>
-			<p>This shader is only for Minecraft with Optifine mod, Iris mod support is planned for the next update.<br>Support for Minecraft 1.12.. - 1.18.. </p><br><br><br>
-			<a href="https://github.com/bambosan/WaterOnlyShader/releases/download/v1.0/Water-Only-Shaders-1.0.zip" style="font-size: 1.4em; padding: 8px; border: 1px solid #888">Download Shaders</a><br><br>
-			<div class="infpack">
-				<i class="far fa-calendar-check"></i>&nbsp;<span id="wos_lu"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-file"></i>&nbsp;<span id="wos_sf"></span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-download"></i>&nbsp;<span id="wos_td"></span>
-			</div><br>
-			<br><br>
-			<footer>&copy; 2022 <a href="https://github.com/bambosan">bambosan</a></footer>
-		</div>
-	</body>
+    </div>
+    <br><br>
+    <p id="chead">Download Shaders</p>
+    <div id="box2">
+      <a href="#"><i class="fas fa-download"></i> Download</a>
+    </div>
+    <br><br>
+    <p id="chead">See My Activity on</p>
+    <div id="box2">
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+      <br>
+      <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+    </div>
+    <footer>
+      <p>Github page<br>by bambosan 2022</p>
+    </footer>
+  </div>
+  <script src="https://bambosan.github.io/a/script.js"></script>
+</body>
 </html>
