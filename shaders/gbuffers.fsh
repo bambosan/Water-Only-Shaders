@@ -9,29 +9,20 @@
 #define wbrightness 0.6 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.0]
 #define waterdensity 0.3 //[0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
 #define wreflectance 0.05 //[0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.012 0.13 0.14 0.15 0.16 0.17 0.18 0.19 0.2]
+#define enabfog
 #define saturate(x) clamp(x, 0.0, 1.0)
+
 const int noiseTextureResolution = 256;
 
 uniform sampler2D lightmap;
 uniform sampler2D texture;
-uniform vec4 entityColor;
 
-#if defined(GBUFFERS_SKYBASIC) || defined(GBUFFERS_WATER)
 uniform mat4 gbufferModelView;
-uniform mat4 gbufferModelViewInverse;
-uniform mat4 gbufferProjection;
-uniform mat4 gbufferProjectionInverse;
-
+uniform vec4 entityColor;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
-uniform vec3 cameraPosition;
 
-uniform float viewHeight;
-uniform float viewWidth;
-uniform float frameTimeCounter;
 uniform float far;
-uniform float near;
-
 uniform int isEyeInWater;
 
 float fogify(float x, float w){
@@ -39,10 +30,20 @@ float fogify(float x, float w){
 }
 
 vec3 calcSkyColor(vec3 pos){
-	float upDot = dot(pos, gbufferModelView[1].xyz); //not much, what's up with you?
+	float upDot = dot(pos, gbufferModelView[1].xyz);
 	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25));
 }
 
+#if defined(GBUFFERS_SKYBASIC) || defined(GBUFFERS_WATER)
+uniform mat4 gbufferModelViewInverse;
+uniform mat4 gbufferProjection;
+uniform mat4 gbufferProjectionInverse;
+uniform vec3 cameraPosition;
+
+uniform float viewHeight;
+uniform float viewWidth;
+uniform float frameTimeCounter;
+uniform float near;
 in float starData;
 #endif
 
@@ -147,15 +148,14 @@ void fakeRefraction(vec3 viewPos, inout vec3 viewPos1, vec3 normalMap, inout vec
 		viewPos1 = screenToView(refractedPos);
 	}
 }
-
-in vec3 viewPos;
-in vec3 worldPos;
 in vec4 normal;
 in mat3 tbnMatrix;
 #endif
 
 in vec2 lmcoord;
 in vec2 texcoord;
+in vec3 viewPos;
+in vec3 worldPos;
 in vec4 glcolor;
 
 void main() {
@@ -181,7 +181,7 @@ void main() {
 	color = glcolor;
 #endif
 
-#if !defined(GBUFFERS_BEACON_BEAM) || !defined(GBUFFERS_CLOUDS) || !defined(GBUFFERS_SKYTEXTURED) || !defined(GBUFFERS_SPIDEREYES)
+#if !defined(GBUFFERS_BEACON_BEAM) && !defined(GBUFFERS_CLOUDS) && !defined(GBUFFERS_SKYTEXTURED) && !defined(GBUFFERS_SPIDEREYES) && !defined(GBUFFERS_SKYBASIC)
 	color *= texture2D(lightmap, lmcoord);
 #endif
 
@@ -216,10 +216,19 @@ void main() {
 		#endif
 
 		// water absorption
-		if(isEyeInWater < 1) color.rgb *= exp(-glcolor.bgr * waterdensity * distance(viewPos1, viewPos));
+		if(isEyeInWater == 0) color.rgb *= exp(-glcolor.bgr * waterdensity * distance(viewPos1, viewPos));
 		
 		color = mix(color, reflection, fresnel);
 	}
+#endif
+
+#ifdef enabfog
+#if !defined(GBUFFERS_CLOUDS) && !defined(GBUFFERS_SKYTEXTURED) && !defined(GBUFFERS_SKYBASIC)
+	vec3 fog = calcSkyColor(normalize(viewPos));
+	float fogDist = saturate(length(worldPos) / far);
+	if(isEyeInWater == 0) fogDist = pow(fogDist, 5.0);
+	color.rgb = mix(color.rgb, fog, fogDist);
+#endif
 #endif
 
 	/* DRAWBUFFERS:0 */

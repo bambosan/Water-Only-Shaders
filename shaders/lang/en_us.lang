@@ -10,3 +10,4 @@ option.raysstep=Raytrace Step Count
 option.refinestep=RT Refine Step Count
 option.waterdensity=Water Density
 option.wreflectance=Water Reflectance
+option.enabfog=Enable Fog

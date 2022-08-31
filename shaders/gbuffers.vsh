@@ -1,13 +1,11 @@
+uniform mat4 gbufferModelViewInverse;
 #ifdef GBUFFERS_WATER
 uniform mat4 gbufferModelView;
-uniform mat4 gbufferModelViewInverse;
 uniform vec3 cameraPosition;
 uniform float frameTimeCounter;
 attribute vec4 at_tangent;
 attribute vec3 mc_Entity;
 
-out vec3 viewPos;
-out vec3 worldPos;
 out vec4 normal;
 out mat3 tbnMatrix;
 #endif
@@ -18,6 +16,8 @@ out float starData;
 
 out vec2 lmcoord;
 out vec2 texcoord;
+out vec3 viewPos;
+out vec3 worldPos;
 out vec4 glcolor;
 
 void main() {
@@ -28,11 +28,12 @@ void main() {
 #if defined(GBUFFERS_WATER) || defined(GBUFFERS_SKYBASIC)
 	starData = float(glcolor.r == glcolor.g && glcolor.g == glcolor.b && glcolor.r > 0.0);
 #endif
+
 	vec4 pos = ftransform();
-	
-#ifdef GBUFFERS_WATER
 	viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
 	worldPos = mat3(gbufferModelViewInverse) * viewPos + gbufferModelViewInverse[3].xyz;
+
+#ifdef GBUFFERS_WATER
 	normal.xyz = normalize(gl_NormalMatrix * gl_Normal);
 	normal.a = float(mc_Entity.x == 1);
 
@@ -41,9 +42,7 @@ void main() {
 	tbnMatrix = transpose(mat3(tangent, binormal, normal.xyz));
 
 	vec3 worldPos2 = worldPos;
-	if(normal.a > 0.0){
-		worldPos2.y += (sin(frameTimeCounter * 3.0 + (worldPos2.x + cameraPosition.x) * 4.0) * 0.05);
-	}
+	if(normal.a > 0.0) worldPos2.y += (sin(frameTimeCounter * 3.0 + (worldPos2.x + cameraPosition.x) * 4.0) * 0.05);
 	pos = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos2, 1.0);
 #endif
 
