@@ -31,7 +31,7 @@ float fogify(float x, float w){
 
 vec3 calcSkyColor(vec3 pos){
 	float upDot = dot(pos, gbufferModelView[1].xyz);
-	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25));
+	return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.2));
 }
 
 #if defined(GBUFFERS_SKYBASIC) || defined(GBUFFERS_WATER)
@@ -223,11 +223,15 @@ void main() {
 #endif
 
 #ifdef enabfog
-#if !defined(GBUFFERS_CLOUDS) && !defined(GBUFFERS_SKYTEXTURED) && !defined(GBUFFERS_SKYBASIC)
-	vec3 fog = calcSkyColor(normalize(viewPos));
-	float fogDist = saturate(length(worldPos) / far);
-	if(isEyeInWater == 0) fogDist = pow(fogDist, 5.0);
-	color.rgb = mix(color.rgb, fog, fogDist);
+#if !defined(GBUFFERS_SKYTEXTURED) && !defined(GBUFFERS_SKYBASIC)
+	float fogDist = pow(saturate(length(worldPos) / far), 3.0);
+	
+	#ifdef GBUFFERS_CLOUDS
+	fogDist = fogDist * 0.7;
+	#endif
+	
+	if(isEyeInWater == 1) fogDist = fogify(1.0 - fogDist, 0.5);
+	color.rgb = mix(color.rgb, calcSkyColor(normalize(viewPos)), fogDist);
 #endif
 #endif
 
