@@ -45,7 +45,7 @@ vec3 decodeNormal(vec2 enc){
 	return vec3(fenc * g, 1.0 - f / 2.0);
 }
 
-bool rayTraceInt(vec3 viewPos, vec3 reflectedPos, out vec2 hitCoord){
+bool linearTrace(vec3 viewPos, vec3 reflectedPos, out vec2 hitCoord){
 	vec3 rayOrigin = viewToScreen(viewPos);
 	vec3 rayDirection = viewToScreen(viewPos + reflectedPos);
 		rayDirection = normalize(rayDirection - rayOrigin) / RAYTRACE_STEP;
@@ -83,7 +83,7 @@ void main(){
 	vec3 reflectedPos = reflect(normalize(viewPos0), normalMap);
 
 	gl_FragData[0].rgb = mix(skyColor, fogColor, exp(-clamp(dot(reflectedPos, gbufferModelView[1].xyz), 0.0, 1.0) * 2.0));
-	if(rayTraceInt(viewPos0, reflectedPos, hitCoord)){
+	if(linearTrace(viewPos0, reflectedPos, hitCoord)){
 		gl_FragData[0].rgb = texture(colortex0, hitCoord).rgb;
 	}
 }

@@ -13,7 +13,7 @@ const vec2 offset[25] = vec2[25](
 	vec2(-2,1), vec2(-1,1), vec2(0,1), vec2(1,1), vec2(2,1),
 	vec2(-2,2), vec2(-1,2), vec2(0,2), vec2(1,2), vec2(2,2)
 );
-  
+
 const float kernel[25] = float[25](
 	1.0/256.0, 1.0/64.0, 3.0/128.0, 1.0/64.0, 1.0/256.0,
 	1.0/64.0, 1.0/16.0, 3.0/32.0, 1.0/16.0, 1.0/64.0,
@@ -33,6 +33,6 @@ void main(){
 		
 		gl_FragData[0].rgb += sampColor * weight * kernel[i];
 		sumWeight += weight * kernel[i];
-    }
+	}
 	gl_FragData[0].rgb /= sumWeight;
 }
