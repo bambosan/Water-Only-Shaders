@@ -1,0 +1,14 @@
+
+option.WATER_WAVE_SCALE=Water Wave Scale
+option.WATER_WAVE_SPEED=Water Wave Speed
+option.WATER_WAVE_STRENGTH=Water Wave Strength
+value.WATER_WAVE_STRENGTH.0.0=0.0 (No Wave)
+option.WATER_TRANSPARENCY=Water Transparency
+option.WATER_BRIGHTNESS=Water Brightness
+option.RAYTRACE_STEP=Reflection Quality
+value.RAYTRACE_STEP.200=§aLow
+value.RAYTRACE_STEP.400=§eMedium
+value.RAYTRACE_STEP.600=§cHigh
+option.WATER_REFLECTANCE=Water Reflectance
+option.ENABLE_FOG=Border Fog
+option.ENABLE_REFRACTION=Refraction

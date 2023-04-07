@@ -1,55 +1,52 @@
-uniform mat4 gbufferModelView;
-uniform mat4 gbufferModelViewInverse;
+#if !defined(GBUFFERS_BASIC) && !defined(GBUFFERS_SKYBASIC)
+	uniform mat4 gbufferModelViewInverse;
+	attribute vec3 mc_Entity;
 
-#ifdef GBUFFERS_SKYBASIC
-	out float starData;
-#else
-	#ifndef GBUFFERS_BASIC
-		#if defined(GBUFFERS_WATER) || defined(GBUFFERS_HAND_WATER)
-			uniform vec3 cameraPosition;
-			uniform float frameTimeCounter;
-			attribute vec4 at_tangent;
-			attribute vec3 mc_Entity;
-			out mat3 tbnMatrix;
-			out vec4 normal;
-			out vec3 worldPos;
-		#endif
+	#if defined(GBUFFERS_WATER) || defined(GBUFFERS_HAND_WATER)
+		attribute vec4 at_tangent;
 
-		out vec2 lmcoord;
-		out vec2 texcoord;
+		uniform vec3 cameraPosition;
+		uniform float frameTimeCounter;
+
+		out mat3 TBN;
+		out vec4 N;
 	#endif
+
+	out vec3 wPos;
+	out vec2 uv0;
+	out vec2 uv1;
 #endif
 
-out vec4 vcolor;
+out vec4 vColor;
+
+#ifndef GBUFFERS_BASIC
+	out vec3 vPos;
+#endif
 
 void main(){
-	vec3 worldPos2 = mat3(gbufferModelViewInverse) * (gl_ModelViewMatrix * gl_Vertex).xyz + gbufferModelViewInverse[3].xyz;
 
-    vcolor = gl_Color;
+#ifndef GBUFFERS_BASIC
+	vPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
+#endif
 
-#ifdef GBUFFERS_SKYBASIC
-	starData = float(gl_Color.r == gl_Color.g && gl_Color.g == gl_Color.b && gl_Color.r > 0.0);
-#else
-	#ifndef GBUFFERS_BASIC
-		texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
-		lmcoord  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
+    vColor = gl_Color;
 
-		#if defined(GBUFFERS_WATER) || defined(GBUFFERS_HAND_WATER)
-			normal.xyz = normalize(gl_NormalMatrix * gl_Normal);
-			normal.a = float(mc_Entity.x == 1) * 0.5;
+#if !defined(GBUFFERS_BASIC) && !defined(GBUFFERS_SKYBASIC)
+	uv0 = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
+	uv1  = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 
-			vec3 tangent = normalize(gl_NormalMatrix * at_tangent.xyz);
-			vec3 binormal = normalize(gl_NormalMatrix * cross(at_tangent.xyz, gl_Normal.xyz) * at_tangent.w);
-			tbnMatrix = transpose(mat3(tangent, binormal, normal.xyz));
+	wPos = mat3(gbufferModelViewInverse) * vPos + gbufferModelViewInverse[3].xyz;
 
-			worldPos = worldPos2;
-
-			if(normal.a > 0.4 && normal.a < 0.6){
-				//worldPos2.y += (sin(frameTimeCounter * 3.0 + (worldPos2.x + cameraPosition.x) * 4.0) * 0.05);
-			}
-		#endif
+	#if defined(GBUFFERS_WATER) || defined(GBUFFERS_HAND_WATER)
+		vec3 T = normalize(gl_NormalMatrix * at_tangent.xyz);
+		vec3 B = normalize(gl_NormalMatrix * cross(at_tangent.xyz, gl_Normal.xyz) * at_tangent.w);
+		N.xyz = normalize(gl_NormalMatrix * gl_Normal);
+		TBN = transpose(mat3(T, B, N.xyz));	
+		N.a = 0.0;
+        if(mc_Entity.x == 1) N.a = 0.5;
+        if(mc_Entity.x == 2) N.a = 0.7;
 	#endif
 #endif
 
-	gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos2, 1.0);
+	gl_Position = ftransform();
 }

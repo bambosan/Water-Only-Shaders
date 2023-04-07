@@ -1,3 +1,3 @@
 #version 130
 #define GBUFFERS_HAND_WATER
-#include "gbuffers.fsh"
+#include "../gbuffers.vsh"
